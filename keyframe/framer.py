@@ -1,16 +1,12 @@
 import os
+
 import cv2
 from tqdm import tqdm
-from .algorithms import (
-    pixelwise,
-    background_subtraction,
-    optical_flow,
-    histogram_comparison,
-    sift_matching,
-    mean_squared_error,
-    phase_correlation,
-)
-from .utils import read_video, export_frame
+
+from .algorithms import (background_subtraction, histogram_comparison,
+                         mean_squared_error, optical_flow, phase_correlation,
+                         pixelwise, sift_matching)
+from .utils import export_frame, read_video
 
 
 class Framer:
