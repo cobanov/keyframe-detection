@@ -49,6 +49,8 @@ class Framer:
                 frame_indices.append(i)
                 previous_frame = current_frame
 
+        print(f"Detected {len(processed_frames)} from {len(frames)} keyframes")
+
         return processed_frames, frame_indices
 
     def process_video(
