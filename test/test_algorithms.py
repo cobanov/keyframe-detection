@@ -1,53 +1,44 @@
 import unittest
+
 import cv2
 import numpy as np
-from keyframe.algorithms import (
-    pixelwise,
-    background_subtraction,
-    optical_flow,
-    histogram_comparison,
-    sift_matching,
-    mean_squared_error,
-    phase_correlation,
-)
+from your_package_name.algorithms import (background_subtraction,
+                                          histogram_comparison,
+                                          mean_squared_error, optical_flow,
+                                          phase_correlation, pixelwise,
+                                          sift_matching)
 
 
 class TestAlgorithms(unittest.TestCase):
+
     def setUp(self):
-        self.frame1 = cv2.imread(
-            "test_frame_1.jpg"
-        )  # Replace with a path to a test frame
-        self.frame2 = cv2.imread(
-            "test_frame_2.jpg"
-        )  # Replace with a path to a test frame
+        # Create two dummy frames for testing
+        self.frame1 = np.zeros((100, 100, 3), dtype=np.uint8)
+        self.frame2 = np.zeros((100, 100, 3), dtype=np.uint8)
+        self.frame2[50:, 50:] = (
+            255  # Change part of the frame2 to simulate a difference
+        )
 
     def test_pixelwise(self):
-        result = pixelwise(self.frame1, self.frame2)
-        self.assertIsInstance(result, bool)
+        self.assertTrue(pixelwise(self.frame1, self.frame2))
 
     def test_background_subtraction(self):
-        result = background_subtraction(self.frame1, self.frame2)
-        self.assertIsInstance(result, bool)
+        self.assertFalse(background_subtraction(self.frame1, self.frame2))
 
     def test_optical_flow(self):
-        result = optical_flow(self.frame1, self.frame2)
-        self.assertIsInstance(result, bool)
+        self.assertFalse(optical_flow(self.frame1, self.frame2))
 
     def test_histogram_comparison(self):
-        result = histogram_comparison(self.frame1, self.frame2)
-        self.assertIsInstance(result, bool)
+        self.assertTrue(histogram_comparison(self.frame1, self.frame2))
 
     def test_sift_matching(self):
-        result = sift_matching(self.frame1, self.frame2)
-        self.assertIsInstance(result, bool)
+        self.assertFalse(sift_matching(self.frame1, self.frame2))
 
     def test_mean_squared_error(self):
-        result = mean_squared_error(self.frame1, self.frame2)
-        self.assertIsInstance(result, bool)
+        self.assertTrue(mean_squared_error(self.frame1, self.frame2))
 
     def test_phase_correlation(self):
-        result = phase_correlation(self.frame1, self.frame2)
-        self.assertIsInstance(result, bool)
+        self.assertFalse(phase_correlation(self.frame1, self.frame2))
 
 
 if __name__ == "__main__":
