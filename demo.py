@@ -4,7 +4,6 @@ from keyframe.framer import Framer
 
 
 def main():
-    # Initialize the Framer class
     framer = Framer()
 
     video_path = "asset/short.mp4"
