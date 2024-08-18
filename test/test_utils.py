@@ -1,29 +1,23 @@
-import os
+
 import unittest
-
+from keyframe.utils import read_video, export_frame
 import numpy as np
-from your_package_name.utils import export_frame, read_video
-
+import os
 
 class TestUtils(unittest.TestCase):
 
-    def setUp(self):
-        self.frame = np.zeros((100, 100, 3), dtype=np.uint8)
-        self.output_path = "test_frame.png"
-
-    def tearDown(self):
-        if os.path.exists(self.output_path):
-            os.remove(self.output_path)
-
     def test_read_video(self):
-        # Assuming read_video returns a list of frames
-        frames = read_video("test_video.mp4")
-        self.assertIsInstance(frames, list)
+        # Test reading a video
+        frames = read_video("asset/short.mp4")
+        self.assertGreater(len(frames), 0)
 
     def test_export_frame(self):
-        export_frame(self.frame, self.output_path)
-        self.assertTrue(os.path.exists(self.output_path))
-
+        # Test exporting a frame
+        frame = np.zeros((100, 100, 3), dtype=np.uint8)
+        output_path = "output_frame.jpg"
+        export_frame(frame, output_path)
+        self.assertTrue(os.path.exists(output_path))
+        os.remove(output_path)
 
 if __name__ == "__main__":
     unittest.main()
