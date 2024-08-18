@@ -1,4 +1,4 @@
-# Keyframe Detection Package
+# Keyframe Detection
 
 `keyframe` is a Python package designed for detecting keyframes in videos using various algorithms. This package provides an easy-to-use interface for processing video frames and extracting significant frames (keyframes) based on different detection methods.
 
