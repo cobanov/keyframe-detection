@@ -3,9 +3,15 @@ import os
 import cv2
 from tqdm import tqdm
 
-from .algorithms import (background_subtraction, histogram_comparison,
-                         mean_squared_error, optical_flow, phase_correlation,
-                         pixelwise, sift_matching)
+from .algorithms import (
+    background_subtraction,
+    histogram_comparison,
+    mean_squared_error,
+    optical_flow,
+    phase_correlation,
+    pixelwise,
+    sift_matching,
+)
 from .utils import export_frame, read_video
 
 
@@ -50,7 +56,7 @@ class Framer:
         return processed_frames, frame_indices
 
     def process_video(
-        self, video_path, algorithm="mean_squared_error", output_dir="keyframes"
+        self, video_path, algorithm="mean_squared_error", output_dir="output/keyframes"
     ):
         frames = read_video(video_path)
         keyframes, frame_indices = self.process_frames(frames, algorithm=algorithm)
