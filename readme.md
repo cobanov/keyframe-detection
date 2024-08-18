@@ -1,83 +1,67 @@
-# Framer
+# Keyframe Detection Package
 
-Framer is a Python library for detecting keyframes in video sequences using various algorithms. It supports multiple methods for comparing frames and extracting keyframes, making it versatile for different use cases such as video summarization, scene change detection, and more.
+`keyframe` is a Python package designed for detecting keyframes in videos using various algorithms. This package provides an easy-to-use interface for processing video frames and extracting significant frames (keyframes) based on different detection methods.
 
-## Features
+### Available Algorithms
 
-- **Multiple Algorithms**: Choose from a variety of algorithms including pixel-wise difference, structural similarity, optical flow, histogram comparison, feature matching, and more.
-- **Video Processing**: Load and process video files to extract keyframes.
-- **Export Keyframes**: Save detected keyframes as images.
+- **pixelwise**: Compares pixels between frames.
+- **background_subtraction**: Uses background subtraction to detect significant changes.
+- **optical_flow**: Measures the movement between frames using optical flow.
+- **histogram_comparison**: Compares histograms of frames.
+- **sift_matching**: Uses SIFT features to detect significant changes.
+- **mean_squared_error**: Computes the mean squared error between frames.
+- **phase_correlation**: Uses phase correlation to detect keyframes.
 
 ## Installation
 
-You can install Framer using pip:
+To install the package, use pip:
 
 ```bash
-pip install framer
-```
-
-Alternatively, you can clone the repository and install the dependencies using:
-
-```bash
-git clone https://github.com/yourusername/framer.git
-cd framer
-pip install -r requirements.txt
+pip install keyframe
 ```
 
 ## Usage
 
-### Basic Example
-
 ```python
-import cv2
-from framer import Framer
+import os
+from keyframe.framer import Framer
 
-# Initialize Framer
 framer = Framer()
 
-# Load and process a video to detect keyframes using the 'structural_similarity' algorithm
-keyframes = framer.process_video("video.mp4", algorithm="structural_similarity", output_dir="keyframes")
+video_path = "asset/short.mp4"
+algorithm = "pixelwise"  # [pixelwise, background_subtraction, optical_flow, histogram_comparison, sift_matching, mean_squared_error, phase_correlation]
+output_dir = f"output/{algorithm}_keyframes"
 
-print(f"Detected {len(keyframes)} keyframes.")
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
+
+print(f"Processing video with '{algorithm}' algorithm...")
+framer.process_video(video_path, algorithm, output_dir)
 ```
 
-### Available Algorithms
+### Command-Line Interface (CLI)
 
-Framer supports several algorithms for keyframe detection:
+You can use the CLI to detect keyframes in a video. The detected keyframes will be saved to a specified directory.
 
-- `pixelwise`: Pixel-wise absolute difference.
-- `background_subtraction`: Background subtraction using MOG2.
-- `optical_flow`: Optical flow (supports Lucas-Kanade and Farneback methods).
-- `structural_similarity`: Structural Similarity Index (SSIM).
-- `histogram_comparison`: Histogram comparison.
-- `feature_matching`: Feature matching using ORB.
-- `sift_matching`: Feature matching using SIFT.
-- `mean_squared_error`: Mean Squared Error.
-- `block_matching`: Block matching (placeholder, update as needed).
-- `phase_correlation`: Phase correlation.
-
-### Exporting Keyframes
-
-Keyframes can be exported to a specified directory using the `export_frame()` method:
-
-```python
-# Export a single frame
-framer.export_frame(keyframes[0], "output/keyframe_0.jpg")
+```bash
+python cli.py path/to/video.mp4 --algorithm pixelwise --output-dir keyframes_output
 ```
 
-### Processing Video Files
+- **`video_path`**: Path to the video file.
+- **`--algorithm`**: The algorithm to use for keyframe detection (default: `mean_squared_error`).
+- **`--output-dir`**: Directory to save the detected keyframes (default: `keyframes`).
 
-To process an entire video and extract keyframes:
+### Example
 
-```python
-keyframes = framer.process_video("input_video.mp4", algorithm="histogram_comparison", output_dir="keyframes")
+```bash
+python cli.py example_video.mp4 --algorithm optical_flow --output-dir keyframes_output
 ```
 
-This will save the keyframes in the `keyframes` directory.
+This command processes `example_video.mp4` using the `optical_flow` algorithm and saves the keyframes in the `keyframes_output` directory.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a pull request or open an issue to discuss changes.
+Contributions are welcome! Please open an issue or submit a pull request if you have suggestions or improvements.
 
 ## License
 
