@@ -1,51 +1,34 @@
 import argparse
-import os
-
 from keyframe.framer import Framer
 
 
-def main():
-    parser = argparse.ArgumentParser(
-        description="Keyframe Detection CLI using various algorithms."
+def run_keyframe_detection(video_path, algorithm, output_dir):
+    framer = Framer()
+    keyframes, indices = framer.process_video(
+        video_path, algorithm=algorithm, output_dir=output_dir
     )
+    print(f"Detected {len(keyframes)} keyframes. Frames saved to {output_dir}.")
 
-    parser.add_argument("video_path", type=str, help="Path to the input video file.")
 
+def main():
+    parser = argparse.ArgumentParser(description="Keyframe Detection CLI")
+    parser.add_argument("video_path", type=str, help="Path to the video file")
     parser.add_argument(
-        "-a",
         "--algorithm",
         type=str,
         default="mean_squared_error",
-        choices=[
-            "pixelwise",
-            "background_subtraction",
-            "optical_flow",
-            "histogram_comparison",
-            "sift_matching",
-            "mean_squared_error",
-            "phase_correlation",
-        ],
-        help="Keyframe detection algorithm to use (default: mean_squared_error).",
+        help="Algorithm to use for detection",
     )
-
     parser.add_argument(
-        "-o",
-        "--output_dir",
+        "--output-dir",
         type=str,
-        default="keyframes_output",
-        help="Directory to save the detected keyframes (default: keyframes_output).",
+        default="keyframes",
+        help="Directory to save keyframes",
     )
 
     args = parser.parse_args()
-    framer = Framer()
 
-    print(f"Processing video: {args.video_path} using {args.algorithm} algorithm")
-    keyframes, frame_indices = framer.process_video(
-        args.video_path, algorithm=args.algorithm, output_dir=args.output_dir
-    )
-
-    print(f"Detected {len(keyframes)} keyframes.")
-    print(f"Keyframes saved to: {os.path.abspath(args.output_dir)}")
+    run_keyframe_detection(args.video_path, args.algorithm, args.output_dir)
 
 
 if __name__ == "__main__":
